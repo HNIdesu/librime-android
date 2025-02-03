@@ -131,6 +131,16 @@ typedef struct rime_candidate_t {
 } RimeCandidate;
 
 typedef struct {
+  char* key;
+  char* value;
+} UserDictEntry;
+
+typedef struct {
+  UserDictEntry* entries;
+  int count;
+} UserDictData;
+
+typedef struct {
   int page_size;
   int page_no;
   Bool is_last_page;
@@ -429,6 +439,8 @@ typedef struct RIME_FLAVORED(rime_api_t) {
    */
   const char* (*get_input)(RimeSessionId session_id);
 
+  void (*get_user_dict_entries)(const char* dict_name,UserDictData* data);
+  void (*release_user_dict_entries)(UserDictData* data);
   //! caret position in terms of raw input
   size_t (*get_caret_pos)(RimeSessionId session_id);
 

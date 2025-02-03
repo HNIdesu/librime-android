@@ -1123,6 +1123,8 @@ void RimeGetUserDataDirSecure(char* dir, size_t buffer_size);
 void RimeGetPrebuiltDataDirSecure(char* dir, size_t buffer_size);
 void RimeGetStagingDirSecure(char* dir, size_t buffer_size);
 void RimeGetSyncDirSecure(char* dir, size_t buffer_size);
+void RimeGetUserDictEntries(const char* dict_name,UserDictData* data);
+void RimeReleaseUserDictEntries(UserDictData* data);
 const char* RimeGetVersion();
 
 RIME_API RIME_FLAVORED(RimeApi) * RIME_FLAVORED(rime_get_api)() {
@@ -1228,6 +1230,9 @@ RIME_API RIME_FLAVORED(RimeApi) * RIME_FLAVORED(rime_get_api)() {
     s_api.highlight_candidate_on_current_page =
         &RimeHighlightCandidateOnCurrentPage;
     s_api.change_page = &RimeChangePage;
+    s_api.get_user_dict_entries = &RimeGetUserDictEntries;
+    s_api.release_user_dict_entries = &RimeReleaseUserDictEntries;
+
   }
   return &s_api;
 }

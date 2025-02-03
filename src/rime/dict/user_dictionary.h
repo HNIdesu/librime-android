@@ -55,7 +55,7 @@ class UserDictionary : public Class<UserDictionary, const Ticket&> {
   bool Load();
   bool loaded() const;
   bool readonly() const;
-
+  an<Db> db() const { return db_; }
   an<UserDictEntryCollector> Lookup(const SyllableGraph& syllable_graph,
                                     size_t start_pos,
                                     size_t depth_limit = 0,

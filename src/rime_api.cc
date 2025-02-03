@@ -12,6 +12,8 @@
 #include <rime/common.h>
 #include <rime/module.h>
 #include <rime/setup.h>
+#include <rime/dict/user_dictionary.h>
+#include <vector>
 
 using namespace rime;
 
@@ -54,6 +56,44 @@ void RimeGetSharedDataDirSecure(char* dir, size_t buffer_size) {
 void RimeGetUserDataDirSecure(char* dir, size_t buffer_size) {
   string string_path = Service::instance().deployer().user_data_dir.string();
   strncpy(dir, string_path.c_str(), buffer_size);
+}
+
+void RimeGetUserDictEntries(const char* dict_name,UserDictData* data){
+  auto component = UserDictionary::Require("user_dictionary");
+  string dict_type = "userdb";
+  auto dict = ((UserDictionaryComponent*)component)->Create(dict_name,dict_type);
+  if(!dict->loaded())
+      dict->Load();
+  auto db = dict->db();
+  auto acc = db->QueryAll();
+  string key,value;
+  auto entry_list=vector<UserDictEntry>();
+  while (!acc->exhausted())
+  {
+    if(acc->GetNextRecord(&key,&value))
+    {
+      auto entry=UserDictEntry();
+      entry.key=new char[key.length()+1];
+      strcpy(entry.key,key.c_str());
+      entry.value = new char[value.length()+1];
+      strcpy(entry.value,value.c_str());
+      entry_list.push_back(entry);
+    }
+  }
+  data->count = entry_list.size();
+  data->entries = new UserDictEntry[entry_list.size()];
+  memcpy(data->entries,entry_list.data(),sizeof(UserDictEntry)*entry_list.size());
+}
+
+
+void RimeReleaseUserDictEntries(UserDictData* data){
+  for(int i=0,count= data->count;i<count;i++)
+  {
+    auto entry=data->entries[i];
+    delete[] entry.key;
+    delete[] entry.value;
+  }
+  delete[] data->entries;
 }
 
 void RimeGetPrebuiltDataDirSecure(char* dir, size_t buffer_size) {
