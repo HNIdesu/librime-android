@@ -441,6 +441,7 @@ typedef struct RIME_FLAVORED(rime_api_t) {
 
   void (*get_user_dict_entries)(const char* dict_name,UserDictData* data);
   void (*release_user_dict_entries)(UserDictData* data);
+  Bool (*delete_user_dict_entry)(const char* dict_name,const char* key);
   //! caret position in terms of raw input
   size_t (*get_caret_pos)(RimeSessionId session_id);
 

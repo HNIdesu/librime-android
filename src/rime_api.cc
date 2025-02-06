@@ -96,6 +96,16 @@ void RimeReleaseUserDictEntries(UserDictData* data){
   delete[] data->entries;
 }
 
+Bool RimeDeleteUsrDictEntry(const char* dict_name,const char* key){
+  auto component = UserDictionary::Require("user_dictionary");
+  string dict_type = "userdb";
+  auto dict = ((UserDictionaryComponent*)component)->Create(dict_name,dict_type);
+  if(!dict->loaded())
+      dict->Load();
+  auto db = dict->db();
+  return db->Erase(key);
+}
+
 void RimeGetPrebuiltDataDirSecure(char* dir, size_t buffer_size) {
   string string_path =
       Service::instance().deployer().prebuilt_data_dir.string();

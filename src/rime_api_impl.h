@@ -1125,6 +1125,7 @@ void RimeGetStagingDirSecure(char* dir, size_t buffer_size);
 void RimeGetSyncDirSecure(char* dir, size_t buffer_size);
 void RimeGetUserDictEntries(const char* dict_name,UserDictData* data);
 void RimeReleaseUserDictEntries(UserDictData* data);
+Bool RimeDeleteUsrDictEntry(const char* dict_name,const char* key);
 const char* RimeGetVersion();
 
 RIME_API RIME_FLAVORED(RimeApi) * RIME_FLAVORED(rime_get_api)() {
@@ -1232,7 +1233,7 @@ RIME_API RIME_FLAVORED(RimeApi) * RIME_FLAVORED(rime_get_api)() {
     s_api.change_page = &RimeChangePage;
     s_api.get_user_dict_entries = &RimeGetUserDictEntries;
     s_api.release_user_dict_entries = &RimeReleaseUserDictEntries;
-
+    s_api.delete_user_dict_entry = &RimeDeleteUsrDictEntry;
   }
   return &s_api;
 }
