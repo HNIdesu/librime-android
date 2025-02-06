@@ -13,3 +13,6 @@
 [submodule "opencc"]
 	path = deps/opencc
 	url = https://github.com/BYVoid/OpenCC.git
+[submodule "marisa-trie"]
+	path = deps/marisa-trie
+	url = https://github.com/hnidesu/marisa-trie.git
