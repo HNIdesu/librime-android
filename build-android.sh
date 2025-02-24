@@ -206,6 +206,7 @@ build_librime() {
             -DBUILD_SHARED_LIBS=ON \
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
             -DCMAKE_TOOLCHAIN_FILE="$NDK_PATH/build/cmake/android.toolchain.cmake" \
+            -DENABLE_LOGGING=OFF \
             -DANDROID_USE_LEGACY_TOOLCHAIN_FILE=ON \
             -DANDROID_NATIVE_API_LEVEL="$ANDROID_API_LEVEL" \
             -DANDROID_NDK="$NDK_PATH" \
