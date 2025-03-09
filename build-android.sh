@@ -199,6 +199,7 @@ build_librime() {
         BUILD_DIR="build/$ANDROID_ARCH_ABI"
         rm -rf "$BUILD_DIR"
         cmake . -B"$BUILD_DIR" \
+            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_FIND_ROOT_PATH="$SOURCE_DIR" \
             -DCMAKE_SHARED_LINKER_FLAGS="-llog -s" \
             -DCMAKE_EXE_LINKER_FLAGS="-llog -s" \
