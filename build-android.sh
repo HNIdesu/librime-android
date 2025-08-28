@@ -48,20 +48,17 @@ COMMON_BUILD_PLUGIN_OPTIONS=(\
 
 
 build_and_install_boost() {
-    boost_dir=$(find "$SOURCE_DIR/deps" -maxdepth 1 -type d -name boost*)
-    if [ -z $boost_dir ]; then
-        echo "Can not find boost." >&2
-        exit -1
-    fi
     echo "Would you like to build boost ?(y/n)"
     read -r choice
     if [ $choice = "y" ]; then
-        cd $boost_dir
         echo "Start to build boost..."
-        rm -rf build
-        cmake . -Bbuild ${COMMON_BUILD_PLUGIN_OPTIONS[@]}
-        cmake --build build -j16
-        cmake --install build
+        boost_dir=$(find "$SOURCE_DIR/deps" -maxdepth 1 -type d -name boost*)
+        if [ -z $boost_dir ]; then
+            $SOURCE_DIR/install-boost.sh --download
+            boost_dir=$(find "$SOURCE_DIR/deps" -maxdepth 1 -type d -name boost*)
+        fi
+        cd $boost_dir
+        cp -r boost $SOURCE_DIR/include
     fi
 }
 
